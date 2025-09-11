@@ -3,8 +3,7 @@
 # vim: tabstop=4 shiftwidth=4 softtabstop=4
 # -*- sh-basic-offset: 4 -*-
 
-# Модифікований інсталятор Anthias для Orange Pi Zero 3
-# Базований на оригінальному скрипті від Screenly/Anthias
+# Модифікований інсталятор Anthias для Orange Pi Zero 3. Базований на оригінальному скрипті від Screenly/Anthias
 
 set -euo pipefail
 
