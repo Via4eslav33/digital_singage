@@ -1,4 +1,4 @@
-# Anthias Digital Signage для Orange Pi Zero 3
+# Anthias Digital Signage for Orange Pi Zero 3
 
 Цей репозиторій містить модифікований інсталятор Anthias (колишній Screenly OSE) для роботи на Orange Pi Zero 3 з Armbian або Debian/Ubuntu.
 
