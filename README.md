@@ -48,7 +48,7 @@ sudo apt install -y curl wget git
 
 ```bash
 wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_installer.sh
-chmod +x anthias-orangepi-installer.sh
+chmod +x anthias_orangepi_installer.sh
 ```
 
 Завантажте допоміжні скрипти:
@@ -56,7 +56,7 @@ chmod +x anthias-orangepi-installer.sh
 ```bash
 wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_postinstall.sh
 wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_troubleshoot.sh
-chmod +x anthias-orangepi-*.sh
+chmod +x anthias_orangepi_*.sh
 ```
 
 ### Крок 3: Запуск інсталяції
@@ -64,7 +64,7 @@ chmod +x anthias-orangepi-*.sh
 ⚠️ **ВАЖЛИВО**: Не запускайте скрипт з правами root!
 
 ```bash
-./anthias-orangepi-installer.sh
+./anthias_orangepi_installer.sh
 ```
 
 Інсталятор запитає вас про:
@@ -77,7 +77,7 @@ chmod +x anthias-orangepi-*.sh
 Після перезавантаження запустіть:
 
 ```bash
-./anthias-orangepi-postinstall.sh
+./anthias_orangepi_postinstall.sh
 ```
 
 Цей скрипт налаштує:
@@ -111,19 +111,19 @@ http://[IP-адреса-Orange-Pi]
 Для швидкого виправлення найпоширеніших проблем:
 
 ```bash
-./anthias-orangepi-troubleshoot.sh --auto
+./anthias_orangepi_troubleshoot.sh --auto
 ```
 
 ### Інтерактивне меню усунення проблем
 
 ```bash
-./anthias-orangepi-troubleshoot.sh
+./anthias_orangepi_troubleshoot.sh
 ```
 
 ### Збір діагностичної інформації
 
 ```bash
-./anthias-orangepi-troubleshoot.sh --diagnose
+./anthias_orangepi_troubleshoot.sh --diagnose
 ```
 
 ### Найпоширеніші проблеми та рішення
