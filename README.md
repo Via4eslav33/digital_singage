@@ -47,15 +47,15 @@ sudo apt install -y curl wget git
 Завантажте модифікований інсталятор:
 
 ```bash
-wget https://surl.li/adpnse/anthias-orangepi-installer.sh
+wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_installer.sh
 chmod +x anthias-orangepi-installer.sh
 ```
 
 Завантажте допоміжні скрипти:
 
 ```bash
-wget https://surl.li/adpnse/anthias-orangepi-postinstall.sh
-wget https://surl.li/adpnse/anthias-orangepi-troubleshoot.sh
+wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_postinstall.sh
+wget https://github.com/Via4eslav33/digital_singage/blob/main/anthias_orangepi_troubleshoot.sh
 chmod +x anthias-orangepi-*.sh
 ```
 
