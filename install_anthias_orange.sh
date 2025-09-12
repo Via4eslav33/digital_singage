@@ -211,6 +211,7 @@ function run_ansible_playbook() {
     # Додаємо виправлення для Orange Pi: вимикаємо RPi-специфічні завдання
     sed -i '/rpi-update\|raspberrypi-kernel\|raspberrypi-bootloader/d' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
     sed -i 's/when:.*ansible_architecture.*/when: false/g' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
+    sed -i '/gpio\|video\|input/d' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
 
     if [ "$ARCHITECTURE" == "x86_64" ]; then
         if [ ! -f /etc/sudoers.d/010_${USER}-nopasswd ]; then
