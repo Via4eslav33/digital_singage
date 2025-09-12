@@ -229,15 +229,16 @@ function upgrade_docker_containers() {
         "$GITHUB_RAW_URL/master/bin/upgrade_containers.sh" \
         -O "$UPGRADE_SCRIPT_PATH"
 
-    # Для ARM64 використовуємо відповідні теги образів
+    # Визначаємо правильний тег для архітектури
+    local DOCKER_TAG_SUFFIX=""
     if [ "$ARCHITECTURE" = "aarch64" ]; then
-        export DOCKER_ARCH="arm64v8-"
+        DOCKER_TAG_SUFFIX="arm64v8-latest-pi4"  # Правильний тег для Orange Pi
     else
-        export DOCKER_ARCH=""
+        DOCKER_TAG_SUFFIX="${DOCKER_TAG}"
     fi
 
     sudo -u ${USER} \
-        DOCKER_TAG="${DOCKER_ARCH}${DOCKER_TAG}" \
+        DOCKER_TAG="${DOCKER_TAG_SUFFIX}" \
         GIT_BRANCH="${BRANCH}" \
         "${UPGRADE_SCRIPT_PATH}"
 }
