@@ -208,26 +208,19 @@ function run_ansible_playbook() {
         -a "repo=$REPOSITORY dest=${ANTHIAS_REPO_DIR} version=${BRANCH} force=yes"
     cd ${ANTHIAS_REPO_DIR}/ansible
 
-    # Пропускаємо теги для Raspberry Pi, якщо це не Raspberry Pi
-    if [ "$DEVICE_TYPE" = "x86" ]; then
+    # Додаємо виправлення для Orange Pi: вимикаємо RPi-специфічні завдання
+    sed -i '/rpi-update\|raspberrypi-kernel\|raspberrypi-bootloader/d' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
+    sed -i 's/when:.*ansible_architecture.*/when: false/g' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
+
+    if [ "$ARCHITECTURE" == "x86_64" ]; then
         if [ ! -f /etc/sudoers.d/010_${USER}-nopasswd ]; then
             ANSIBLE_PLAYBOOK_ARGS+=("--ask-become-pass")
         fi
+
         ANSIBLE_PLAYBOOK_ARGS+=(
             "--skip-tags" "raspberry-pi"
         )
-    else
-        # Для Orange Pi пропускаємо специфічні для Raspberry Pi теги
-        ANSIBLE_PLAYBOOK_ARGS+=(
-            "--skip-tags" "raspberry-pi-specific" # Припустимо, що є такі теги
-        )
     fi
-
-    # Додаткові аргументи для Orange Pi
-    ANSIBLE_PLAYBOOK_ARGS+=(
-        "-e" "graphics_driver=modesetting" # Можливо, інший графічний драйвер
-        "-e" "device_type=${DEVICE_TYPE}"
-    )
 
     sudo -E -u ${USER} ${SUDO_ARGS[@]} \
         ansible-playbook site.yml "${ANSIBLE_PLAYBOOK_ARGS[@]}"
