@@ -125,6 +125,7 @@ function install_packages() {
         "libffi-dev"
         "libssl-dev"
         "whois"
+        "gettext-base"
     )
 
     if [ "$DISTRO_VERSION" -ge 12 ]; then
