@@ -177,27 +177,21 @@ function install_ansible() {
 
 # КРИТИЧНО: Змінюємо функцію визначення пристрою для Orange Pi
 function set_device_type() {
-    # Перевіряємо модель через /proc/device-tree/model або /sys/firmware/devicetree/base/model
-    local MODEL=""
-    if [ -f /proc/device-tree/model ]; then
-        MODEL=$(tr -d '\0' < /proc/device-tree/model)
-    elif [ -f /sys/firmware/devicetree/base/model ]; then
-        MODEL=$(tr -d '\0' < /sys/firmware/devicetree/base/model)
-    fi
-
-    # Визначаємо тип пристрою на основі моделі та архітектури
-    if [ "$ARCHITECTURE" = "x86_64" ]; then
+    if [ ! -f /proc/device-tree/model ] && [ "$(uname -m)" = "x86_64" ]; then
         export DEVICE_TYPE="x86"
-    elif echo "$MODEL" | grep -qi "orange.*pi.*zero.*3"; then
-        # Вважаємо Orange Pi Zero 3 аналогом Raspberry Pi 4 за потужністю
+    elif grep -q "OrangePi" /proc/device-tree/model || [ "$(uname -m)" = "aarch64" ]; then
+        export DEVICE_TYPE="pi4"  # Використовуємо pi4 для Orange Pi
+    elif grep -qF "Raspberry Pi 5" /proc/device-tree/model || grep -qF "Compute Module 5" /proc/device-tree/model; then
+        export DEVICE_TYPE="pi5"
+    elif grep -qF "Raspberry Pi 4" /proc/device-tree/model || grep -qF "Compute Module 4" /proc/device-tree/model; then
         export DEVICE_TYPE="pi4"
+    elif grep -qF "Raspberry Pi 3" /proc/device-tree/model || grep -qF "Compute Module 3" /proc/device-tree/model; then
+        export DEVICE_TYPE="pi3"
+    elif grep -qF "Raspberry Pi 2" /proc/device-tree/model; then
+        export DEVICE_TYPE="pi2"
     else
-        # Резервний варіант для інших ARM-пристроїв
-        export DEVICE_TYPE="pi4"
+        export DEVICE_TYPE="pi4"  # За замовчуванням для не-RPi пристроїв
     fi
-
-    gum format "Device model detected: $MODEL"
-    gum format "Device type set to: $DEVICE_TYPE"
 }
 
 function run_ansible_playbook() {
