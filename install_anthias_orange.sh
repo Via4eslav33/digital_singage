@@ -208,6 +208,11 @@ function run_ansible_playbook() {
     sed -i 's/when:.*ansible_architecture.*/when: false/g' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
     sed -i '/gpio\|video\|input/d' ${ANTHIAS_REPO_DIR}/ansible/roles/system/tasks/main.yml
 
+    sudo mkdir -p /boot/firmware/
+    sudo touch /boot/firmware/config.txt
+    sudo touch /boot/config.txt
+    sudo touch /boot/cmdline.txt
+
     if [ "$ARCHITECTURE" == "x86_64" ]; then
         if [ ! -f /etc/sudoers.d/010_${USER}-nopasswd ]; then
             ANSIBLE_PLAYBOOK_ARGS+=("--ask-become-pass")
