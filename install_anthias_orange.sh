@@ -179,16 +179,23 @@ function install_ansible() {
 function set_device_type() {
     if [ ! -f /proc/device-tree/model ] && [ "$(uname -m)" = "x86_64" ]; then
         export DEVICE_TYPE="x86"
-    elif grep -q "OrangePi" /proc/device-tree/model || [ "$(uname -m)" = "aarch64" ]; then
-        export DEVICE_TYPE="pi4"  # Використовуємо pi4 для Orange Pi
-    elif grep -qF "Raspberry Pi 5" /proc/device-tree/model || grep -qF "Compute Module 5" /proc/device-tree/model; then
-        export DEVICE_TYPE="pi5"
-    elif grep -qF "Raspberry Pi 4" /proc/device-tree/model || grep -qF "Compute Module 4" /proc/device-tree/model; then
-        export DEVICE_TYPE="pi4"
-    elif grep -qF "Raspberry Pi 3" /proc/device-tree/model || grep -qF "Compute Module 3" /proc/device-tree/model; then
-        export DEVICE_TYPE="pi3"
-    elif grep -qF "Raspberry Pi 2" /proc/device-tree/model; then
-        export DEVICE_TYPE="pi2"
+    elif grep -qi "orange" /proc/device-tree/model || [ "$(uname -m)" = "aarch64" ]; then
+        export DEVICE_TYPE="pi4"  # Для Orange Pi
+    elif grep -qi "amlogic" /proc/device-tree/model || grep -qi "s905" /proc/device-tree/model; then
+        export DEVICE_TYPE="pi4"  # Для Amlogic S905X3 TV box
+    elif grep -qi "raspberry" /proc/device-tree/model; then
+        # Для Raspberry Pi
+        if grep -qF "Raspberry Pi 5" /proc/device-tree/model; then
+            export DEVICE_TYPE="pi5"
+        elif grep -qF "Raspberry Pi 4" /proc/device-tree/model; then
+            export DEVICE_TYPE="pi4"
+        elif grep -qF "Raspberry Pi 3" /proc/device-tree/model; then
+            export DEVICE_TYPE="pi3"
+        elif grep -qF "Raspberry Pi 2" /proc/device-tree/model; then
+            export DEVICE_TYPE="pi2"
+        else
+            export DEVICE_TYPE="pi1"
+        fi
     else
         export DEVICE_TYPE="pi4"  # За замовчуванням для не-RPi пристроїв
     fi
